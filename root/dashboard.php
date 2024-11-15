@@ -1,4 +1,26 @@
-<!DOCTYPE html>
+<?php
+session_start();
+
+// Block browser back button access to previously cached pages
+header("Cache-Control: no-store, no-cache, must-revalidate");  
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: 0");
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: index.php");
+    exit();
+}
+
+// Handle logout logic
+if (isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header("Location: index.php");
+    exit();
+}
+
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
